@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { use, useState,useEffect } from 'react'
 import Navbar from './Component/Navbar';
 import Movies from './Component/Movies';
 import WatchList from './Component/WatchList';
 import Banner from './Component/Banner';
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 function App() {
 
   let [watchList, setWatchList] = useState([]);
@@ -12,6 +13,7 @@ function App() {
   let handleAddtoWatchList =(moviesObject)=>{
 
     let newWatchList =[...watchList, moviesObject];
+    localStorage.setItem("moviesItem",JSON.stringify(newWatchList));
     setWatchList(newWatchList);
     console.log(newWatchList);
   }
@@ -21,6 +23,14 @@ function App() {
     setWatchList(filteredWatchList);
   };
 
+  useEffect(()=>{
+    let movies=JSON.parse(localStorage.getItem("moviesItem"));
+    if(!movies){
+      return//setWatchList(movies);
+    }
+    setWatchList(movies);
+  })
+
   return (
     <>
       <BrowserRouter>
@@ -28,7 +38,7 @@ function App() {
         <Routes>
 
           <Route path='/' element={<> <Banner/> <Movies handleAddtoWatchList={handleAddtoWatchList} handleRemoveFromWatchList={handleRemoveFromWatchList} watchList={watchList}/></>} />
-          <Route path='/watchlist' element={<WatchList/>}/>
+          <Route path='/watchlist' element={<WatchList watchList={watchList}/>}/>
           
         </Routes>
       </BrowserRouter>

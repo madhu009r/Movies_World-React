@@ -1,6 +1,14 @@
-import React from 'react'
+import { use, useState,useEffect } from 'react'
 
-function WatchList() {
+function WatchList({watchList}) {
+
+
+    const [search,setSearch]= useState("");
+
+    let handleSearch=(e)=>{
+        setSearch(e.target.value);
+    }
+
   return (
     <>
 
@@ -15,7 +23,7 @@ function WatchList() {
 
 
     <div className=' flex justify-center my-4'>
-      <input type='text' placeholder='Enter the Movie list..' className='h-[3rem] w-[18rem] bg-gray 900 px-8 outline-none text-gray-500' />
+      <input onChange={handleSearch} value={search} type='text' placeholder='Enter the Movie list..' className='h-[3rem] w-[18rem] bg-gray 300 px-8 outline-none text-gray-500' />
 
     </div>
 
@@ -31,17 +39,24 @@ function WatchList() {
         </thead>
 
         <tbody>
-          <tr>
-            <td className='flex items-center px-6 py-4 '>
-              <img className='h-[8rem] w-[8rem] ' src={`https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCSEPTIrvv8DxvKSdDec-1KhwErePCyy-E-Q&s`} />
-              <div className='mx-10'>Jumanji</div>
-            </td>
-            <td>7.5</td>
-            <td>9</td>
-            <td>Adventure</td>
-            <td className='text-red-600'>Delete</td>
-          </tr>
 
+          {watchList.filter((movieOdj)=>{
+            return movieOdj.name.toLowerCase().includes(search.toLocaleLowerCase())
+          })
+          .map((MovieObj)=>{
+            return <tr>
+             <td className='flex items-center px-6 py-4 '>
+              <img className='h-[8rem] w-[8rem] ' src={`https://image.tmdb.org/t/p/w500/${MovieObj.poster_path}`} />
+              <div className='mx-10'>{MovieObj.name}</div>
+             </td>
+             <td>{MovieObj.vote_average}</td>
+             <td>9</td>
+             <td>Adventure</td>
+             <td className='text-red-600'>Delete</td>
+          </tr>
+          })
+          }
+          
         </tbody>
       </table>
 
