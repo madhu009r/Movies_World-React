@@ -29,7 +29,7 @@ function App() {
       return//setWatchList(movies);
     }
     setWatchList(movies);
-  })
+  },[]);
 
   return (
     <>
@@ -38,7 +38,7 @@ function App() {
         <Routes>
 
           <Route path='/' element={<> <Banner/> <Movies handleAddtoWatchList={handleAddtoWatchList} handleRemoveFromWatchList={handleRemoveFromWatchList} watchList={watchList}/></>} />
-          <Route path='/watchlist' element={<WatchList watchList={watchList}/>}/>
+          <Route path='/watchlist' element={<WatchList watchList={watchList} setWatchList={setWatchList}/>}/>
           
         </Routes>
       </BrowserRouter>
