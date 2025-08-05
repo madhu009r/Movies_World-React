@@ -1,5 +1,6 @@
 import { use, useState,useEffect } from 'react'
 
+import generids from '../Utility/genre'
 function WatchList({watchList, setWatchList }) {
 
 
@@ -69,7 +70,7 @@ function WatchList({watchList, setWatchList }) {
              </td>
              <td>{MovieObj.vote_average}</td>
              <td>9</td>
-             <td>Adventure</td>
+             <td>{generids[MovieObj.genre_ids[0]]}</td>
              <td className='text-red-600'>Delete</td>
           </tr>
           })
